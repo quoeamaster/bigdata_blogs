@@ -1,0 +1,95 @@
+GET /_cat/indices?h=index&s=index
+
+GET test_sigma_rule/_search
+
+DELETE imdb_nested
+PUT imdb_nested
+{"mappings":{"properties":{"actors":{"type":"nested","properties":{"id":{"type":"keyword"},"name":{"type":"text","fields":{"raw":{"type":"keyword"}}},"avatar":{"type":"keyword"},"home":{"type":"keyword"}}},"movie":{"properties":{"year":{"type":"integer"},"img":{"type":"keyword"},"name":{"type":"text","fields":{"raw":{"type":"keyword"}}},"duration":{"properties":{"display":{"type":"keyword"},"in_min":{"type":"short"}}},"genre":{"type":"keyword"},"genre_display":{"type":"text","fields":{"keyword":{"type":"keyword"}}},"stars":{"type":"half_float"},"desc":{"type":"text"},"director":{"type":"text","fields":{"raw":{"type":"keyword"}}}}}}}}
+
+GET imdb_nested/_search
+
+POST imdb_nested/_delete_by_query
+{"query":{"match_all":{}}}
+
+
+POST imdb_nested/_bulk
+{"index":{"_id":"re_1"}}
+{"movie":{"year":2002,"img":"https://m.media-amazon.com/images/M/MV5BZmI1ZGRhNDYtOGVjZC00MmUyLThlNTktMTQyZGE3MzE1ZTdlXkEyXkFqcGdeQXVyNDE5MTU2MDE@._V1_UY268_CR1,0,182,268_AL_.jpg","name":"Resident Evil (2002)","duration":{"display":"1h 40min","in_min":100},"genre":["action","horror","sci-fi"],"genre_display":"action, horror, sci-fi","stars":6.7,"desc":"A special military unit fights a powerful, out-of-control supercomputer and hundreds of scientists who have mutated into flesh-eating creatures after a laboratory accident","director":"Paul W.S. Anderson"},"actors":[{"id":"act_001","name":"Milla Jovovich","avatar":"https://m.media-amazon.com/images/M/MV5BNzA1Nzc4NjYwNV5BMl5BanBnXkFtZTcwNjA2NjY1Mg@@._V1_UY317_CR18,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0000170/?ref_=tt_ov_st_sm"},{"id":"act_003","name":"Michelle Rodriguez","avatar":"https://m.media-amazon.com/images/M/MV5BYThkMmY1OTYtMTZmNi00YTVmLThkMGItNDlhNzE0ZDZkNGQ0XkEyXkFqcGdeQXVyMjQwMDg0Ng@@._V1_UY317_CR8,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0735442/?ref_=tt_ov_st_sm"},{"id":"act_002","name":"Eric Mabius","avatar":"https://m.media-amazon.com/images/M/MV5BMTQxMjY5MDk4NV5BMl5BanBnXkFtZTcwNDgwNDY1Mg@@._V1_UY317_CR4,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0531095/?ref_=tt_cl_t12"}]}
+{"index":{"_id":"re_2"}}
+{"movie":{"year":2004,"img":"https://m.media-amazon.com/images/M/MV5BMTc1NTUxMzk0Nl5BMl5BanBnXkFtZTcwNDQ1MDIzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg","name":"Resident Evil: Apocalypse (2004)","duration":{"display":"1h 34min","in_min":94},"genre":["action","horror","sci-fi"],"genre_display":"action, horror, sci-fi","stars":6.2,"desc":"Alice wakes up in Racoon city hospital after the city has been overrun by zombies. Alice must now make it out of the city before a mucilage bomb is dropped on the city.","director":"Alexander Witt"},"actors":[{"id":"act_001","name":"Milla Jovovich","avatar":"https://m.media-amazon.com/images/M/MV5BNzA1Nzc4NjYwNV5BMl5BanBnXkFtZTcwNjA2NjY1Mg@@._V1_UY317_CR18,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0000170/?ref_=tt_ov_st_sm"},{"id":"act_004","name":"Sienna Guillory","avatar":"https://m.media-amazon.com/images/M/MV5BMTQzMTc1MTczOV5BMl5BanBnXkFtZTgwNjU4ODM2NTE@._V1_UY317_CR51,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0347149/?ref_=tt_ov_st_sm"},{"id":"act_002","name":"Eric Mabius","avatar":"https://m.media-amazon.com/images/M/MV5BMTQxMjY5MDk4NV5BMl5BanBnXkFtZTcwNDgwNDY1Mg@@._V1_UY317_CR4,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0531095/?ref_=tt_cl_t12"}]}
+{"index":{"_id":"re_3"}}
+{"movie":{"year":2007,"img":"https://m.media-amazon.com/images/M/MV5BNDQ0MWI3MmEtMzM0OC00Y2ViLWE4MDItMzNhNmY1ZTdjMWE2XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg","name":"Resident Evil: Extinction (2007)","duration":{"display":"1h 34min","in_min":94},"genre":["action","horror","sci-fi"],"genre_display":"action, horror, sci-fi","stars":6.3,"desc":"Survivors of the Raccoon City catastrophe travel across the Nevada desert, hoping to make it to Alaska. Alice joins the caravan and their fight against the evil Umbrella Corp.","director":"Russell Mulcahy"},"actors":[{"id":"act_001","name":"Milla Jovovich","avatar":"https://m.media-amazon.com/images/M/MV5BNzA1Nzc4NjYwNV5BMl5BanBnXkFtZTcwNjA2NjY1Mg@@._V1_UY317_CR18,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0000170/?ref_=tt_ov_st_sm"},{"id":"act_005","name":"Ali Larter","avatar":"https://m.media-amazon.com/images/M/MV5BMjE0MzA4Njc1NF5BMl5BanBnXkFtZTcwOTczNTUxNw@@._V1_UY317_CR10,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0005123/?ref_=tt_ov_st_sm"},{"id":"act_006","name":"Oded Fehr","avatar":"https://m.media-amazon.com/images/M/MV5BOGZjNTZiOWQtYzNjOC00MzUwLTkxNDQtMzQxZmE1NDBkZWNkXkEyXkFqcGdeQXVyNDcyNTEzNTk@._V1_UX214_CR0,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0004912/?ref_=tt_ov_st_sm"}]}
+{"index":{"_id":"re_4"}}
+{"movie":{"year":2010,"img":"https://m.media-amazon.com/images/M/MV5BZjRlMGQ0NmUtM2U2Ny00MTk3LTg5NjAtN2M3Y2JmZjllNjJlXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_UX182_CR0,0,182,268_AL_.jpg","name":"Resident Evil: Afterlife (2010)","duration":{"display":"1h 36min","in_min":98},"genre":["action","horror","sci-fi"],"genre_display":"action, horror, sci-fi","stars":5.8,"desc":"While still out to destroy the evil Umbrella Corporation, Alice joins a group of survivors living in a prison surrounded by the infected who also want to relocate to the mysterious but supposedly unharmed safe haven known only as Arcadia.","director":"Paul W.S. Anderson"}}
+{"index":{"_id":"re_5"}}
+{"movie":{"year":2012,"img":"https://m.media-amazon.com/images/M/MV5BMTA2NTkwNjUxNTZeQTJeQWpwZ15BbWU3MDE2OTMxMTg@._V1_UX182_CR0,0,182,268_AL_.jpg","name":"Resident Evil: Retribution (2012)","duration":{"display":"1h 35min","in_min":97},"genre":["action","horror","sci-fi"],"genre_display":"action, horror, sci-fi","stars":5.4,"desc":"Alice fights alongside a resistance movement to regain her freedom from an Umbrella Corporation testing facility.","director":"Paul W.S. Anderson"}}
+{"index":{"_id":"re_6"}}
+{"movie":{"year":2016,"img":"https://m.media-amazon.com/images/M/MV5BMTc0Mzc2OTQ0Ml5BMl5BanBnXkFtZTgwOTQ5MjE4MDI@._V1_UX182_CR0,0,182,268_AL_.jpg","name":"Resident Evil: The Final Chapter (2016)","duration":{"display":"1h 47min","in_min":109},"genre":["action","horror","sci-fi"],"genre_display":"action, horror, sci-fi","stars":5.5,"desc":"Alice returns to where the nightmare began: The Hive in Raccoon City, where the Umbrella Corporation is gathering its forces for a final strike against the only remaining survivors of the apocalypse.","director":"Paul W.S. Anderson"}}
+
+GET imdb_nested/_search
+
+PUT _ingest/pipeline/imdb_join_genre
+{
+  "processors": [
+    {
+      "join": {
+        "field": "movie.genre",
+        "separator": ", ",
+        "target_field": "movie.genre_display"
+      }
+    }
+  ]
+}
+POST imdb_nested/_update_by_query?pipeline=imdb_join_genre
+{
+  "query": {"match_all": {}}
+}
+
+GET imdb_nested/_search
+
+GET imdb_nested/_search
+{"query":{"bool":{"must":[{"range":{"movie.stars":{"gte":6.1}}},{"nested":{"inner_hits":{},"path":"actors","query":{"match":{"actors.name":"eric"}}}}]}}}
+
+# canvas ES-SQL can't query array fields...
+# approach -> create presentation views / indices
+
+# split the actors to actor index
+DELETE imdb_actors
+PUT imdb_actors
+{"mappings":{"properties":{"episodes":{"type":"keyword"},"actor":{"properties":{"name":{"type":"text","fields":{"raw":{"type":"keyword"}}},"avatar":{"type":"keyword"},"home":{"type":"keyword"}}}}}}
+
+POST imdb_actors/_bulk
+{"index":{"_id":"act_01"}}
+{"episodes":["re_1","re_2","re_3"],"actor":{"name":"Milla Jovovich","avatar":"https://m.media-amazon.com/images/M/MV5BNzA1Nzc4NjYwNV5BMl5BanBnXkFtZTcwNjA2NjY1Mg@@._V1_UY317_CR18,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0000170/?ref_=tt_ov_st_sm"}}
+{"index":{"_id":"act_02"}}
+{"episodes":["re_1","re_2"],"actor":{"name":"Eric Mabius","avatar":"https://m.media-amazon.com/images/M/MV5BMTQxMjY5MDk4NV5BMl5BanBnXkFtZTcwNDgwNDY1Mg@@._V1_UY317_CR4,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0531095/?ref_=tt_cl_t12"}}
+{"index":{"_id":"act_03"}}
+{"episodes":["re_1"],"actor":{"name":"Michelle Rodriguez","avatar":"https://m.media-amazon.com/images/M/MV5BYThkMmY1OTYtMTZmNi00YTVmLThkMGItNDlhNzE0ZDZkNGQ0XkEyXkFqcGdeQXVyMjQwMDg0Ng@@._V1_UY317_CR8,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0735442/?ref_=tt_ov_st_sm"}}
+{"index":{"_id":"act_04"}}
+{"episodes":["re_2"],"actor":{"name":"Sienna Guillory","avatar":"https://m.media-amazon.com/images/M/MV5BMTQzMTc1MTczOV5BMl5BanBnXkFtZTgwNjU4ODM2NTE@._V1_UY317_CR51,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0347149/?ref_=tt_ov_st_sm"}}
+{"index":{"_id":"act_05"}}
+{"episodes":["re_3"],"actor":{"name":"Ali Larter","avatar":"https://m.media-amazon.com/images/M/MV5BMjE0MzA4Njc1NF5BMl5BanBnXkFtZTcwOTczNTUxNw@@._V1_UY317_CR10,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0005123/?ref_=tt_ov_st_sm"}}
+{"index":{"_id":"act_06"}}
+{"episodes":["re_3"],"actor":{"name":"Oded Fehr","avatar":"https://m.media-amazon.com/images/M/MV5BOGZjNTZiOWQtYzNjOC00MzUwLTkxNDQtMzQxZmE1NDBkZWNkXkEyXkFqcGdeQXVyNDcyNTEzNTk@._V1_UX214_CR0,0,214,317_AL_.jpg","home":"https://www.imdb.com/name/nm0004912/?ref_=tt_ov_st_sm"}}
+
+GET imdb_actors/_search
+
+GET imdb_nested/_search
+{
+  "size": 0,
+  "aggs": {
+    "_t": {
+      "terms": {
+        "field": "movie.stars"
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
