@@ -1,0 +1,205 @@
+# blog on lookup indices
+
+# ------- a. routine use case
+
+# create publisher index (the lookup index)
+DELETE blog_enrich_publisher
+PUT blog_enrich_publisher
+{"mappings":{"properties":{"id":{"type":"keyword"},"name":{"type":"text","fields":{"keyword":{"type":"keyword"}}}}}}
+
+POST blog_enrich_publisher/_bulk
+{"index":{}}
+{"id":"pub_001","name":"Packt Publishing Limited"}
+{"index":{}}
+{"id":"pub_002","name":"Sams Publishing"}
+{"index":{}}
+{"id":"pub_003","name":"Manning Publications"}
+
+# create the book index (to be enriched)
+DELETE blog_enrich_books
+PUT blog_enrich_books
+{"mappings":{"properties":{"pub_id":{"type":"keyword"},"name":{"type":"text","fields":{"keyword":{"type":"keyword"}}},"pages":{"type":"short"},"lang":{"type":"keyword"},"isbn":{"type":"keyword"},"type":{"type":"keyword"}}}}
+
+POST blog_enrich_books/_bulk
+{"index":{}}
+{"name":"Hands-On System Programming with Go: Build modern and concurrent applications for Unix and Linux systems using Golang","pub_id":"pub_001","pages":458,"lang":"English","isbn":"1789804078","type":"paperback"}
+{"index":{}}
+{"name":"Go in 24 Hours, Sams Teach Yourself: Next Generation Systems Programming with Golang","pub_id":"pub_002","pages":368,"lang":"English","isbn":"0672338033","type":"paperback"}
+{"index":{}}
+{"name":"Go in Action","pub_id":"pub_003","pages":260,"lang":"English","isbn":"1617291781","type":"paperback"}
+
+
+# create enrichment policy
+PUT _enrich/policy/blog_book_publisher
+{
+  "match": {
+    "indices": "blog_enrich_publisher",
+    "match_field": "id",
+    "enrich_fields": ["id", "name"]
+  }
+}
+GET _enrich/policy
+GET /_cat/indices?s=index
+GET _alias
+GET _cat/aliases?v
+# creating the lookup index (with given fields)
+POST _enrich/policy/blog_book_publisher/_execute
+
+
+# create pipeline for enrichment
+PUT _ingest/pipeline/blog_book_publisher
+{
+  "processors": [
+    {
+      "enrich": {
+        "policy_name": "blog_book_publisher",
+        "field": "pub_id",
+        "target_field": "publisher_info",
+        "on_failure": [
+          {
+            "set": {
+              "field": "error.msg",
+              "value": "{{ _ingest.on_failure_message }}"
+            }
+          },
+          {
+            "set": {
+              "field": "error.code",
+              "value": 100
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+
+
+# update / enrich
+POST blog_enrich_books/_update_by_query?pipeline=blog_book_publisher
+
+
+# enriched content
+GET blog_enrich_books/_search
+
+
+
+
+# ------- b. updated the lookup index
+
+POST blog_enrich_publisher/_bulk
+{"index":{}}
+{"id":"pub_004","name":"Springer London Ltd"}
+
+# re-execute to update the lookup index data
+POST _enrich/policy/blog_book_publisher/_execute
+
+# the .enrich-blog_book_publisher is pointing to the new / updated lookup index (so some housekeep tasks MUST be done eventually; maybe ilm might include this action evenutally???)
+GET _cat/indices?h=index&s=index
+GET _cat/aliases
+GET .enrich-blog_book_publisher/_search
+
+
+# update the books inventory
+POST blog_enrich_books/_bulk
+{"index":{}}
+{"name":"Guide to J2EE: Enterprise Java","pub_id":"pub_004","pages":672,"lang":"English","isbn":"1852337044","type":"paperback"}
+
+# enrich
+POST blog_enrich_books/_update_by_query?pipeline=blog_book_publisher
+{
+  "query": {
+    "match": {
+      "isbn": "1852337044"
+    }
+  }
+}
+GET blog_enrich_books/_search
+
+
+
+# ------- c. lookup index is made of up several index sources...
+DELETE blog_enrich_publisher_2
+PUT blog_enrich_publisher_2
+{"mappings":{"properties":{"id":{"type":"keyword"},"country":{"type":"keyword"},"name":{"type":"text","fields":{"keyword":{"type":"keyword"}}}}}}
+
+POST blog_enrich_publisher_2/_bulk
+{"index":{}}
+{"id":"cn_pub_001","name":"机械工业出版社","country":"China"}
+{"index":{}}
+{"id":"it_pub_989","name":"Pearson", "country": "Italy"}
+
+
+# add a few new books
+POST blog_enrich_books/_bulk
+{"index":{}}
+{"name":"Java 9模块化开发：核心原则与实践","pub_id":"cn_pub_001","lang":"简体中文","isbn":"B07F6Y9L4K","type":"paperback"}
+{"index":{}}
+{"name":"Programmazione di base e avanzata con Java. Ediz. Mylab. Con Contenuto digitale per download e accesso on line","pages":954,"pub_id":"it_pub_989","lang":"italiano","isbn":"8891904570","type":"paperback"}
+
+
+# update the enrich policy
+PUT _enrich/policy/blog_book_publisher
+{
+  "match": {
+    "indices": ["blog_enrich_publisher","blog_enrich_publisher_2"],
+    "match_field": "id",
+    "enrich_fields": ["id", "name", "country"]
+  }
+}
+# can't directly overwrite
+# create a new policy first
+PUT _enrich/policy/blog_book_publisher_2
+{
+  "match": {
+    "indices": ["blog_enrich_publisher","blog_enrich_publisher_2"],
+    "match_field": "id",
+    "enrich_fields": ["id", "name", "country"]
+  }
+}
+# execute the new policy
+POST _enrich/policy/blog_book_publisher_2/_execute
+GET _alias
+GET .enrich-blog_book_publisher_2/_search
+# update the pipeline
+PUT _ingest/pipeline/blog_book_publisher
+{
+  "processors": [
+    {
+      "enrich": {
+        "policy_name": "blog_book_publisher_2",
+        "field": "pub_id",
+        "target_field": "publisher_info",
+        "on_failure": [
+          {
+            "set": {
+              "field": "error.msg",
+              "value": "{{ _ingest.on_failure_message }}"
+            }
+          },
+          {
+            "set": {
+              "field": "error.code",
+              "value": 100
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+# remove old policy
+GET _enrich/policy
+DELETE _enrich/policy/blog_book_publisher
+
+# update our books!
+POST blog_enrich_books/_update_by_query?pipeline=blog_book_publisher
+
+GET blog_enrich_books/_search
+
+
+
+
+
+
+
