@@ -1,0 +1,177 @@
+# 1. handling various logs with common content
+# a. cleanup
+DELETE online_banking,stocks_quick,loans_master
+
+# b. mapping
+PUT online_banking
+{
+  "mappings": {
+    "properties": {
+      "client_id": {"type": "keyword"},
+      "app_id": {"type": "keyword"},
+      "action": {"type": "text"}
+    }
+  }
+}
+PUT stocks_quick
+{
+  "mappings": {
+    "properties": {
+      "buyerId": {"type": "keyword"},
+      "application_id": {"type": "keyword"},
+      "log": {"type": "text"}
+    }
+  }
+}
+PUT loans_master 
+{
+  "mappings": {
+    "properties": {
+      "client_id": {"type": "text",
+        "fields": {
+          "keyword": { "type": "keyword" }
+        }
+      },
+      "aId": {"type": "keyword"},
+      "message": {"type": "text"}
+    }
+  }
+}
+
+# c. ingest
+POST _bulk
+{"index":{"_index":"loans_master","_id":"124"}}
+{"client_id": "124","aId":"app01", "message": "loans for property - Genius Garden lot 25 has been granted successfully"}
+{"index":{"_index":"online_banking","_id":"101"}}
+{"client_id":"111","app_id":"app01", "action": "payment transferred successfully"}
+{"index":{"_index":"stocks_quick","_id":"101"}}
+{"buyerId":"111","application_id":"app01", "log": "stocks id 001 - IBM buy-in ended with 0 stocks purchased"}
+
+
+
+
+# d. search ???
+GET online_banking,stocks_quick,loans_master/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "111",
+      "fields": ["client_id.keyword", "client_id", "buyerId"]
+    }
+  }
+}
+
+
+# e. kibana issues
+POST _aliases
+{
+  "actions": [
+    {
+      "add": {
+        "index": "online_banking",
+        "alias": "bank_apps"
+      }
+    },
+    {
+      "add": {
+        "index": "stocks_quick",
+        "alias": "bank_apps"
+      }
+    },
+    {
+      "add": {
+        "index": "loans_master",
+        "alias": "bank_apps"
+      }
+    }
+  ]
+}
+
+GET _cat/aliases?v&s=alias
+GET bank_apps/_search
+
+GET bank_apps/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "111",
+      "fields": ["client_id.keyword", "client_id", "buyerId"]
+    }
+  }
+}
+
+# ------------------------------------
+
+# 2. consolidate logs by field-alias
+# a. mapping (a common field named as "log")
+#    mapping (a common field named as "client_id")
+
+PUT online_banking/_mapping
+{
+  "properties": {
+    "log": {
+      "type": "alias",
+      "path": "action"
+    },
+    "customer_id": {
+      "type": "alias",
+      "path": "client_id"
+    }
+  }
+}
+PUT stocks_quick/_mapping
+{
+  "properties": {
+    "customer_id": {
+      "type": "alias",
+      "path": "buyerId"
+    }
+  }
+}
+PUT loans_master/_mapping
+{
+  "properties": {
+    "log": {
+      "type": "alias",
+      "path": "message"
+    },
+    "customer_id": {
+      "type": "alias",
+      "path": "client_id.keyword"
+    }
+  }
+}
+
+# b. now you can do aggregation...
+GET bank_apps/_search
+{
+  "size": 0,
+  "aggs": {
+    "_customer_id": {
+      "terms": {
+        "field": "customer_id",
+        "size": 10
+      },
+      "aggs": {
+        "_top_hits": {
+          "top_hits": {
+            "size": 10
+          }
+        }
+      }
+    }
+  }
+}
+GET bank_apps/_search
+{
+  "query": {
+    "match": {
+      "log": "successfully"
+    }
+  },
+  "highlight": {
+    "fields": {
+      "log": {}
+    }
+  }
+}
