@@ -1,0 +1,46 @@
+{
+ "vocabulary": [
+  {
+   "category": "computer & technology",
+   "tokens": [
+    "future", "feeling", "internet", "password", "cracking", "code", "cracking+interview", "blog", "startup", "python", 
+    "crash+course", "cognitive", "unicorn+projecct", "security", "machine+learning", "aws", "serverless", "api", "html", 
+    "css", "html+css"
+   ]
+  },
+  {
+   "category": "business technology",
+   "tokens": [
+    "excel", "accounting", "quickbooks", "seo", "ai", "dotcom", "instagram", "blogging", "youtube", "dax"
+   ]
+  },
+  {
+   "category": "management information system",
+   "tokens": [
+    "information", "database+management", "scrum", "analysis", "design", "cissp", "leader", "arcgis", "sql", "ethics",
+    "communication", "network", "agile", "data+mining", "oracle", "information+system", "mysql", "enterprise+architecture", "devops", "data+science",
+    "design+pattern"
+   ]
+  },
+  {
+   "category": "certification",
+   "tokens": [
+    "adobe", "photoshop", "after+effects", "illustrator", "inDesign", "itsm", "animate", "premiere", "flash", "dreamweaver",
+    "creative+cloud", "ccent", "linux", "comptia", "oracle", "ocp", "oca", "itil", "pl+sql", "data+warehouse"
+   ]
+  },
+  {
+   "category": "database & big data",
+   "tokens": [
+    "scikit", "tensorflow", "ai", "silicon+valley", "data+intensive", "panda+framework", "data+analysis", "keras", "apache+spark", "microsoft+access"
+   ]
+  },
+  {
+   "category": "programming language",
+   "tokens": [
+    "ada", "python", "scratch", "java", "golang", "csharp", "c+language", "smalltalk", "ajax", "dhtml",
+    "javascript", "react+js", "vue+js", "angular+js", "MEAN+stack", "MERN+stack", "xcode", "swift"
+   ]
+  }
+ ]
+}
