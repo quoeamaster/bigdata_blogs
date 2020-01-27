@@ -1,0 +1,88 @@
+.s-main-container {
+    background: white;
+}
+.s-main-title {
+    font-size: 1.05em;
+    font-family: "Comic Sans MS";
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-left: 2px solid #ccc;
+    border-right: 2px solid #ccc;
+    border-top: 2px solid #ccc;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.s-separator {
+    border-bottom: 1px solid rgba(204, 204, 204, 0.5);
+}
+.s-main-closer {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom: 2px solid #ccc;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.s-accordion {
+    border-right: 2px solid #ccc;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.s-accordion-norm {
+    border-left: 2px solid #ccc;
+}
+.s-accordion-chosen {
+    border-left: 3px solid #FFB600;
+}
+
+/* details-panel css */
+
+.s-accordion-detail-container {
+    padding-top: 4px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 20px;
+    border-left: 2px solid #ccc;
+    border-right: 2px solid #ccc;
+}
+.s-full-text {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    padding-left: 8px;
+    padding-right: 8px;
+    color: #FF9800;
+}
+.s-30-text {
+    width: 30%;
+}
+.s-50-text {
+    width: 50%;
+}
+.s-70-text {
+    width: 70%;
+}
+.s-caption-detailed {
+    font-size: 0.9em;
+    color: #999;
+    margin-top: 12px;
+}
+.s-cbox {
+    margin-right: 4px;
+}
+.s-full-button {
+    width: 100%;
+    border: 1px solid #666;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+::placeholder {
+    color: #ccc;
+}

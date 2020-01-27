@@ -1,0 +1,31 @@
+.r-container {
+    padding-top: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.r-card-container {
+    background: white;
+    border-radius: 4px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+    box-shadow: 1px 1px 5px #ccc;
+    margin-top: 4px;
+    margin-bottom: 16px;
+}
+
+.r-card-title {
+    color: #62685A; font-size: 1.1em; font-weight: 300; font-family: 'Comic Sans MS';
+}
+.r-card-caption {
+    color: #62685A; font-size: 1.0em; font-weight: 300; font-family: 'Comic Sans MS';
+}
+.r-desc-container-limited {
+    height: 190px;
+    overflow: hidden;
+}
+.r-desc-container-auto {
+    height: auto;
+}

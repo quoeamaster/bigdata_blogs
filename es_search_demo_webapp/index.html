@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script> <!-- vue -->
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> <!-- JQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script> <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script> <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/js/mdb.min.js"></script> <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="lib/util_lib.js"></script> <!-- util js -->
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"> <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap core CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet"> <!-- Material Design Bootstrap -->
+
+  <script src="https://unpkg.com/vuex"></script>
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
+
+  <title>search page demo</title>
+
+  <!-- link href="style/common.css" rel="stylesheet" --> <!-- in the bundle -->
+  <!-- components -->
+  <script type="text/javascript" src="component/search_header.js"></script>
+  <script type="text/javascript" src="component/content_container.js"></script>
+  <script type="text/javascript" src="component/search_panel.js"></script>
+  <script type="text/javascript" src="component/search_panel_simple.js"></script>
+  <script type="text/javascript" src="component/search_panel_complex.js"></script>
+  <script type="text/javascript" src="component/search_panel_should.js"></script>
+  <script type="text/javascript" src="component/search_panel_sort.js"></script>
+  <script type="text/javascript" src="component/search_panel_prefix.js"></script>
+  <script type="text/javascript" src="component/result_panel.js"></script>
+
+  <link href="css/common.css" rel="stylesheet">
+  <link href="css/header.css" rel="stylesheet">
+  <link href="css/container.css" rel="stylesheet">
+  <link href="css/search.css" rel="stylesheet">
+  <link href="css/result.css" rel="stylesheet">
+
+</head>
+
+<body>
+<div id="app" style="background: #fbfbfb;">
+  <search-header v-bind:store="store"></search-header>
+  <content-container v-bind:store="store"></content-container>
+  <!-- dummy-text v-bind:scrub="scrub"></dummy-text -->
+</div>
+<!-- include the bundled javascript + css + certain photos -->
+<script type="text/javascript" src="component/app.js"></script>
+</body>
+</html>
