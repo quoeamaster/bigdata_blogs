@@ -19,6 +19,7 @@ Vue.component('search-header', {
         }
       };
       window.eventBus.$emit('on-query-request', { 'query': q });
+      //this.$emit('onQueryRequest', { 'query': q });
     }
   },
   template: `

@@ -9,18 +9,14 @@ Vue.component('content-container', {
   },
   methods: {
     runQuery: function (q) {
+      let inst = this;
       this.getESConnection().search({
         index: 'google_book_demo',
         body: q,
         filterPath: 'hits.total.value,hits.hits._source'
       }).then(function (data) {
-        this.results = data;
-        console.log(this.results);
+        inst.results = data;
       });
-
-      setTimeout(function () {
-        this.random = new Date().getTime();
-      }, 100);
     },
     getESConnection: function () {
       if (!this.esConnection) {
@@ -33,10 +29,7 @@ Vue.component('content-container', {
   data: function() {
     return {
       esConnection: null,
-      random: new Date().getTime(),
-      // TODO: search-panel would raise an event with the results ... and then pass the results to the result-panel
-      // TODO: hard-code for TESTING only *********
-      /*
+      /* TODO: testing data
       results: {
         "hits": {
           "total": {"value": 275},
@@ -97,7 +90,7 @@ Vue.component('content-container', {
     <search-panel v-bind:store="store"></search-panel>
   </div>
   <div class="c-right-panel">
-    <result-panel v-bind:store="store" v-bind:random="random" v-bind:results="results"></result-panel>
+    <result-panel v-bind:store="store" v-bind:results="results"></result-panel>
   </div>
 </div>
   `

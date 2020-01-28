@@ -1,5 +1,5 @@
 Vue.component('result-panel', {
-  props: ['store', 'results', 'random'],
+  props: ['store', 'results'],
   watch: {
     result: function (val) {
       console.log('new data from parent and es');
@@ -17,14 +17,38 @@ Vue.component('result-panel', {
       } else {
         return {"hits": {"hits": []}}
       }
+    },
+    getHitCnt: function () {
+      if (this.results && this.results.hits && this.results.hits.total) {
+        return this.results.hits.total.value;
+      } else {
+        return 'not available';
+      }
+    },
+    shouldShow: function () {
+      if (this.results && this.results.hits && this.results.hits.hits && this.results.hits.hits.length > 0) {
+        return {
+          'show-block': true,
+          'show-hidden': false
+        };
+      } else {
+        return {
+          'show-block': false,
+          'show-hidden': true
+        };
+      }
     }
+
   },
   template: `
 <div style="overflow: scroll; height: 100%;">
   <div class="r-container" style="overflow: hidden;">
+    <div style="margin-bottom: 8px;" v-bind:class="shouldShow()">
+      <span style="font-family: 'Comic Sans MS'; font-size: 1.1em; color: #666; margin-right: 4px;">matches</span>
+      {{getHitCnt()}}
+    </div>
     <r-card v-for="r in getResults()" v-bind:result="r" ></r-card>
   </div>
-  <div class="show-block">{{random}}</div>
 </div>
   `
 });
