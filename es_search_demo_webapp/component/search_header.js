@@ -9,6 +9,16 @@ Vue.component('search-header', {
   methods: {
     doHeaderSearch: function () {
       this.store.commit('setSearchbarText', this.searchbarText);
+      //jQuery
+      let q = {
+        "query": {
+          "multi_match": {
+            "query": this.searchbarText,
+            "fields": ["name", "desc"]
+          }
+        }
+      };
+      window.eventBus.$emit('on-query-request', { 'query': q });
     }
   },
   template: `

@@ -39,26 +39,31 @@ Vue.component('search-panel', {
     </div>
     <search-panel-accordion v-on:onAccordionClick="onAccordionClick" 
       qType="simple" 
+      v-bind:currentQType="chosenQType"
       iconClass="fas,fa-book" caption="simple query"></search-panel-accordion>
     <s-simple-query v-bind:class="shouldShow('simple')"></s-simple-query>
     
     <search-panel-accordion v-on:onAccordionClick="onAccordionClick" 
       qType="complex"  
+      v-bind:currentQType="chosenQType"
       iconClass="fas,fa-bong" caption="complex query"></search-panel-accordion>
     <s-complex-query v-bind:class="shouldShow('complex')"></s-complex-query>
     
     <search-panel-accordion v-on:onAccordionClick="onAccordionClick" 
       qType="should"  
+      v-bind:currentQType="chosenQType"
       iconClass="fas,fa-bowling-ball" caption="nice to have conditions"></search-panel-accordion>
     <s-should-query v-bind:class="shouldShow('should')"></s-should-query>
     
     <search-panel-accordion v-on:onAccordionClick="onAccordionClick" 
       qType="sort"  
+      v-bind:currentQType="chosenQType"
       iconClass="fas,fa-bullhorn" caption="sorting"></search-panel-accordion>
     <s-sort-query v-bind:class="shouldShow('sort')"></s-sort-query>
     
     <search-panel-accordion v-on:onAccordionClick="onAccordionClick" 
       qType="prefix"  
+      v-bind:currentQType="chosenQType"
       iconClass="fas,fa-carrot" caption="prefix search / suggestion"></search-panel-accordion>
     <s-prefix-query v-bind:class="shouldShow('prefix')"></s-prefix-query>
     
@@ -70,7 +75,7 @@ Vue.component('search-panel', {
 
 
 Vue.component('search-panel-accordion', {
-  props: ['caption', 'iconClass', 'qType'],
+  props: ['caption', 'iconClass', 'qType', 'currentQType'],
   methods: {
     getIconClass: function () {
       let _css = {};
@@ -83,9 +88,33 @@ Vue.component('search-panel-accordion', {
     isChosen: function () {
       // TODO: changes when this is a chosen accordion
       // 's-accordion-chosen' vs 's-accordion-norm'
-      return {
-        's-accordion-norm': true
-      };
+      let c = {};
+      if (this.currentQType) {
+        if (this.currentQType === this.qType) {
+          c['s-accordion-chosen'] = true;
+          c['s-accordion-norm'] = false;
+        } else {
+          c['s-accordion-chosen'] = false;
+          c['s-accordion-norm'] = true;
+        }
+        // prefix type???
+        if (this.currentQType === 'prefix') {
+          c['s-main-closer'] = false;
+        } else if (this.qType === 'prefix') {
+          c['s-main-closer'] = true;
+        } else if (this.currentQType === '') {
+          c['s-main-closer'] = true;
+        }
+
+      } else {
+        c['s-accordion-chosen'] = false;
+        c['s-accordion-norm'] = true;
+        // init case
+        if (this.qType === 'prefix') {
+          c['s-main-closer'] = true;
+        }
+      }
+      return c;
     },
     raiseEvent: function () {
       this.$emit('onAccordionClick',  {

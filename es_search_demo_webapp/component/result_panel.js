@@ -1,15 +1,30 @@
 Vue.component('result-panel', {
-  props: ['store', 'results'],
+  props: ['store', 'results', 'random'],
+  watch: {
+    result: function (val) {
+      console.log('new data from parent and es');
+    }
+  },
   data: function() {
     return {
 
     };
   },
+  methods: {
+    getResults: function () {
+      if (this.results && this.results.hits && this.results.hits.hits) {
+        return this.results.hits.hits;
+      } else {
+        return {"hits": {"hits": []}}
+      }
+    }
+  },
   template: `
 <div style="overflow: scroll; height: 100%;">
   <div class="r-container" style="overflow: hidden;">
-    <r-card v-for="r in results.hits.hits" v-bind:result="r" ></r-card>
+    <r-card v-for="r in getResults()" v-bind:result="r" ></r-card>
   </div>
+  <div class="show-block">{{random}}</div>
 </div>
   `
 });
@@ -28,6 +43,14 @@ Vue.component('r-card', {
         return this.result['_source'];
       } else {
         return {};
+      }
+    },
+    getName: function() {
+      let n = this.getSrc()['name'];
+      if (n) {
+        return n;
+      } else {
+        return '';
       }
     },
     getImage: function () {
@@ -154,18 +177,31 @@ Vue.component('r-card', {
         c = "not available"
       }
       return c;
-    }
+    },
 
+    shouldShow: function () {
+      if (this.result.hasOwnProperty('_source')) {
+        return {
+          'show-hidden': false,
+          'show-block': true
+        };
+      } else {
+        return {
+          'show-hidden': true,
+          'show-block': false
+        };
+      }
+    }
   },
   template: `
-<div class="r-card-container">
+<div class="r-card-container" v-bind:class="shouldShow()">
   <div style="display: flex; flex-direction: row;">
     <div style="flex-basis: 200px; flex-grow: 0; margin-right: 8px;">
       <img v-bind:src="getImage()" width="100%;" style="border-radius: 6px; border: 1px solid #eee;"  >
     </div>
     <div style="flex-basis: 450px; flex-grow: 1; ">
       <div class="r-card-title" style="margin-bottom: 4px;">
-        {{result['_source']['name']}}{{getPublisher()}}
+        {{getName()}}{{getPublisher()}}
       </div>
       <div>written by <span class="r-card-caption">{{getAuthors()}}</span></div>
       <div>published on <span class="r-card-caption">{{getPublishDate()}}</span></div>
