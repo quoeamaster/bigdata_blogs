@@ -20,7 +20,11 @@ Vue.component('search-header', {
       };
       window.eventBus.$emit('on-query-request', { 'query': q });
       //this.$emit('onQueryRequest', { 'query': q });
+    },
+    showAbout: function () {
+        
     }
+
   },
   template: `
 <div class="h-header-div">
@@ -34,7 +38,7 @@ Vue.component('search-header', {
       class="h-searchbar">
   </div>
   <div class="float-right" >
-    <span class="h-caption cursor-pointer">
+    <span class="h-caption cursor-pointer" v-on:click="showAbout()">
       About
     </span>
   </div>

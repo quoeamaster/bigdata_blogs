@@ -4,10 +4,12 @@
     <list default="true" id="65ec0d12-4838-4865-937d-b47805f6f027" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/component/content_container.js" beforeDir="false" afterPath="$PROJECT_DIR$/component/content_container.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/component/result_panel.js" beforeDir="false" afterPath="$PROJECT_DIR$/component/result_panel.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/component/search_header.js" beforeDir="false" afterPath="$PROJECT_DIR$/component/search_header.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/component/search_panel_complex.js" beforeDir="false" afterPath="$PROJECT_DIR$/component/search_panel_complex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/search_panel_prefix.js" beforeDir="false" afterPath="$PROJECT_DIR$/component/search_panel_prefix.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/search_panel_should.js" beforeDir="false" afterPath="$PROJECT_DIR$/component/search_panel_should.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/component/search_panel_simple.js" beforeDir="false" afterPath="$PROJECT_DIR$/component/search_panel_simple.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/search_panel_sort.js" beforeDir="false" afterPath="$PROJECT_DIR$/component/search_panel_sort.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -53,8 +55,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/component/content_container.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="4" column="41" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="41" />
+            <state relative-caret-position="504">
+              <caret line="21" column="27" lean-forward="true" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
               <folding>
                 <element signature="e#292#6192#0" />
               </folding>
@@ -62,39 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/component/search_header.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/component/search_panel_simple.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="17" column="64" lean-forward="true" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="64" />
-              <folding>
-                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#1;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#2;n#div#2;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/component/search_panel_complex.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="19" column="15" lean-forward="true" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
-              <folding>
-                <element signature="n#style#0;n#div#5;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#6;n#div#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="554">
+              <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -109,21 +83,21 @@
       <list>
         <option value="$PROJECT_DIR$/lib/util_lib.js" />
         <option value="$PROJECT_DIR$/css/header.css" />
-        <option value="$PROJECT_DIR$/component/search_panel_should.js" />
-        <option value="$PROJECT_DIR$/component/search_panel_sort.js" />
         <option value="$PROJECT_DIR$/css/search.css" />
-        <option value="$PROJECT_DIR$/component/search_panel_prefix.js" />
         <option value="$PROJECT_DIR$/css/container.css" />
         <option value="$PROJECT_DIR$/css/common.css" />
         <option value="$PROJECT_DIR$/css/result.css" />
         <option value="$PROJECT_DIR$/component/search_panel.js" />
         <option value="$PROJECT_DIR$/component/app.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/component/search_header.js" />
-        <option value="$PROJECT_DIR$/component/content_container.js" />
         <option value="$PROJECT_DIR$/component/result_panel.js" />
         <option value="$PROJECT_DIR$/component/search_panel_simple.js" />
+        <option value="$PROJECT_DIR$/component/search_panel_should.js" />
         <option value="$PROJECT_DIR$/component/search_panel_complex.js" />
+        <option value="$PROJECT_DIR$/component/content_container.js" />
+        <option value="$PROJECT_DIR$/component/search_panel_sort.js" />
+        <option value="$PROJECT_DIR$/component/search_panel_prefix.js" />
+        <option value="$PROJECT_DIR$/component/search_header.js" />
       </list>
     </option>
   </component>
@@ -193,12 +167,12 @@
       <option name="presentableId" value="Default" />
       <updated>1580094717552</updated>
       <workItem from="1580094719227" duration="25108000" />
-      <workItem from="1580177985754" duration="11190000" />
+      <workItem from="1580177985754" duration="14416000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36298000" />
+    <option name="totallyTimeSpent" value="39524000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
@@ -242,24 +216,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/component/search_panel_sort.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="6" column="13" lean-forward="true" selection-end-line="20" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/component/search_panel_should.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="9" column="51" lean-forward="true" selection-start-line="8" selection-start-column="2" selection-end-line="9" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/container.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
@@ -278,13 +234,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
           <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/component/search_panel_prefix.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="7" column="54" lean-forward="true" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="54" />
         </state>
       </provider>
     </entry>
@@ -345,27 +294,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/component/search_header.js">
+    <entry file="file://$PROJECT_DIR$/component/search_panel_should.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
+        <state relative-caret-position="552">
+          <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/component/search_panel_complex.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="557">
+          <caret line="30" column="47" selection-start-line="30" selection-start-column="47" selection-end-line="30" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/component/content_container.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="41" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="41" />
+        <state relative-caret-position="504">
+          <caret line="21" column="27" lean-forward="true" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
           <folding>
             <element signature="e#292#6192#0" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/component/search_panel_sort.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/component/search_panel_prefix.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/component/search_panel_simple.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="17" column="64" lean-forward="true" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="64" />
+        <state relative-caret-position="360">
+          <caret line="15" column="9" lean-forward="true" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
           <folding>
             <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#2;n#div#0;n#!!top" expanded="true" />
@@ -375,14 +349,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/component/search_panel_complex.js">
+    <entry file="file://$PROJECT_DIR$/component/search_header.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="19" column="15" lean-forward="true" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
-          <folding>
-            <element signature="n#style#0;n#div#5;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#6;n#div#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="554">
+          <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
         </state>
       </provider>
     </entry>

@@ -15,6 +15,7 @@ Vue.component('s-simple-query', {
           }
         }
       };
+      console.log(q);
       window.eventBus.$emit('on-query-request', { 'query': q });
     }
   },

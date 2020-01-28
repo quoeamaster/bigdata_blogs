@@ -20,15 +20,15 @@ Vue.component('s-complex-query', {
       qC += _t;
 
       _t = this.addMustMatchCriteria('desc', this.desc, false, false);
-      if (_t !== '') { qC += ',' }
+      if (_t !== '' && qC !== '') { qC += ',' }
       qC += _t;
 
       _t = this.addPagesWivRange('pages', this.pages, this.pages_more_than);
-      if (_t !== '') { qC += ',' }
+      if (_t !== '' && qC !== '') { qC += ',' }
       qC += _t;
 
       _t = this.addFilterRangeCriteria('publish_date', this.publish_date_from, this.publish_date_to);
-      if (_t !== '') { qC += ',' }
+      if (_t !== '' && qC !== '') { qC += ',' }
       qC += _t;
 
       let q = '{ "query": { "bool": { "must": [' + qC + '] }}}';

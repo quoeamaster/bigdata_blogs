@@ -4,17 +4,25 @@ Vue.component('content-container', {
     let inst = this;
     window.eventBus.$on('on-query-request', function (data) {
       let q = data.query;
-      inst.runQuery(q);
+      let s = data.sort;
+      inst.runQuery(q, s);
     });
   },
   methods: {
-    runQuery: function (q) {
+    runQuery: function (q, s) {
       let inst = this;
-      this.getESConnection().search({
+      let params = {
         index: 'google_book_demo',
-        body: q,
-        filterPath: 'hits.total.value,hits.hits._source'
-      }).then(function (data) {
+        filterPath: 'hits.total.value,hits.hits._source',
+      };
+      if (q && q !== '') {
+        params['body'] = q;
+      }
+      if (s && s !== '') {
+        params['sort'] = s;
+      }
+
+      this.getESConnection().search(params).then(function (data) {
         inst.results = data;
       });
     },
