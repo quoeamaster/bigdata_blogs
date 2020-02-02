@@ -1,0 +1,48 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="/lib/vue.js"></script> <!-- vue -->
+  <script type="text/javascript" src="lib/jquery.min.js"></script> <!-- JQuery -->
+  <script type="text/javascript" src="lib/popper.min.js"></script> <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="lib/bootstrap.min.js"></script> <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="lib/mdb.min.js"></script> <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="lib/elasticsearch-js/elasticsearch.jquery.js"></script> <!-- es js -->
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"> <!-- Font Awesome -->
+  <link href="css/lib/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap core CSS -->
+  <link href="css/lib/mdb.min.css" rel="stylesheet"> <!-- Material Design Bootstrap -->
+
+  <script src="lib/vuex.js"></script>
+  <script src="lib/es6-promise.auto.js"></script>
+
+  <script src="lib/lib_util.js"></script>
+  <script src="component/header.js"></script>
+  <script src="component/map.js"></script>
+  <script src="component/controls.js"></script>
+
+  <link href="css/common.css" rel="stylesheet">
+  <link href="css/header.css" rel="stylesheet">
+  <link href="css/map.css" rel="stylesheet">
+  <link href="css/controls.css" rel="stylesheet">
+
+  <title>SG taxi availability - Elasticsearch and GMap</title>
+</head>
+<body>
+  <div id="app" style="background: #fbfbfb;">
+    <geo-header v-bind:store="store"></geo-header>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-8">
+          <map-instance v-bind:store="store"></map-instance>
+        </div>
+        <div class="col-4">
+          <map-controls v-bind:store="store"></map-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- include the bundled javascript + css + certain photos -->
+  <script type="text/javascript" src="component/app.js"></script>
+</body>
+</html>

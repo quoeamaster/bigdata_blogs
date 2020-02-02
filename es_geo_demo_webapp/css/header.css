@@ -1,0 +1,57 @@
+.h-container {
+    height: 60px;
+    box-shadow: 0 1px #ccc;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.h-font {
+    font-family: "Comic Sans MS";
+}
+.h-title {
+    font-size: 1.2em;
+    font-style: italic;
+    line-height: 60px;
+    height: 60px;
+    vertical-align: middle;
+}
+.h-font-grey {
+    color: #666;
+}
+.h-caption {
+    line-height: 60px;
+    height: 60px;
+    vertical-align: middle;
+}
+
+.h-nhood-container {
+    #height: 200px;
+    height: 0;
+    #background: #0d0d0d;
+    background: #ddd;
+    margin-top: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    overflow: scroll;
+    /* animation effect */
+    transition: height .5s;
+}
+.h-nhood-container-200 {
+    height: 200px;
+    padding-top: 10px;
+    padding-bottom: 4px;
+    /* animation effect */
+    transition: height .5s;
+}
+.h-nhood-label {
+    #color: white;
+    color: #fcf6f5;
+    #background: #0d0d0d;
+    background: #1e88e5;
+    #background: #89abe3;
+    border: 0 solid;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
