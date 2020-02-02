@@ -55,3 +55,59 @@
     margin-top: 4px;
     margin-bottom: 4px;
 }
+
+
+/* about dlg */
+.h-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    /*padding-top: 100px;*/ /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+/* The Close Button */
+.h-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.h-modal-close:hover,
+.h-modal-close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+.h-modal-container {
+    background: #eee;
+    border-radius: 8px;
+    border: 1px solid white;
+    width: 550px;
+    padding: 20px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.h-modal-caption {
+    line-height: 30px;
+}
+.h-modal-li-caption {
+    color: #666;
+    font-weight: 400;
+}
+.h-modal-li-bold-caption {
+    font-family: "Comic Sans MS";
+    font-weight: bold;
+}

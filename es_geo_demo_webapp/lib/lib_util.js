@@ -10,19 +10,43 @@ let _setMapCenterWivMarker = function (store, mapInstance) {
     center: _latLng,
     zoom: 11
   });
-  _setMarker(_latLng, false, mapInstance);
+  return {
+    marker: _setMarker(_latLng, false, mapInstance, true, null),
+    mapInstance: mapInstance
+  };
 };
 
-let _setMarker = function (loc, isCab, mapInstance) {
+let _setMarker = function (loc, isCab, mapInstance, isCenter, label) {
   let _markers = [];
+  let cabIconSize = new google.maps.Size(24, 24);
   if (loc) {
     if (isCab && isCab === true) {
-      _markers.push(new google.maps.Marker({position: loc, map: mapInstance,
-        icon: 'http://maps.google.com/mapfiles/kml/shapes/cabs.png'}));
+      let _i = {
+        url: 'http://maps.google.com/mapfiles/kml/shapes/cabs.png',
+        scaledSize: cabIconSize,
+        origin: new google.maps.Point(0,0), // origin
+        anchor: new google.maps.Point(0, 0) // anchor
+      };
+      let _m = new google.maps.Marker({position: loc, map: mapInstance,
+        scaledSize: cabIconSize,
+        icon: _i });
+      if (label && label !== '') {
+        _m.setTitle(label);
+      }
+      _markers.push(_m);
     } else {
-      _markers.push(new google.maps.Marker({position: loc, map: mapInstance}));
+      let _m = new google.maps.Marker({position: loc, map: mapInstance});
+      if (label && label !== '') {
+        _m.setTitle(label);
+      }
+      _markers.push(_m);
+    }
+    // centering?
+    if (isCenter && isCenter === true) {
+      //mapInstance.panTo(loc);
     }
   }
+  return _markers;
 };
 
 let _getLatLngByAddress = async function (address, aK) {
@@ -40,3 +64,11 @@ let _getLatLngByAddress = async function (address, aK) {
   return _promise.promise();
 };
 
+let _setMap2FitAllMarkers = function (markers, mapInstance) {
+  let latlngbounds = new google.maps.LatLngBounds();
+  markers.forEach(function (_m) {
+    latlngbounds.extend(_m.position);
+  });
+  mapInstance.setCenter(latlngbounds.getCenter());
+  mapInstance.fitBounds(latlngbounds);
+};

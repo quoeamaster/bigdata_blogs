@@ -2,17 +2,23 @@ Vue.component('map-controls', {
   props: ['store'],
   mounted: function() {
     window.eventBus.$on('onAKReceived', this.getAK);
+    window.eventBus.$on('onNeighborhoodChosenUpdate', this.updateNeighborhood)
   },
   data: function() {
     return {
       aK: '',
       address: '',
-      range: 4,
+      range: 1,
       rangeUnit: 'km',
-      info: 'testing'
+      info: ''
     };
   },
   methods: {
+    updateNeighborhood: function(data) {
+      this.address = data['name'];
+      this.updateInfo(data);
+      // no need to update the store (already updated earlier)
+    },
     getAK: function(data) {
       this.aK = data['aK'];
     },
