@@ -1,0 +1,87 @@
+GET sg_taxi_location/_search
+
+# list out all areas / neighborhood
+GET sg_taxi_location/_search
+{
+  "size": 0,
+  "aggs": {
+    "neighourhood": {
+      "terms": {
+        "field": "geo.neighbourhood.raw",
+        "size": 1000
+      }
+    }
+  }
+}
+# top hits included
+GET sg_taxi_location/_search
+{
+  "size": 0,
+  "aggs": {
+    "neighourhood": {
+      "terms": {
+        "field": "geo.neighbourhood.raw",
+        "size": 1000
+      },
+      "aggs": {
+        "top": {
+          "top_hits": {
+            "_source": ["location"], 
+            "size": 2
+          }
+        }
+      }
+    }
+  }
+}
+# geo distance query (plain)
+GET sg_taxi_location/_search
+{
+  "size": 100, 
+  "query": {
+    "geo_distance": {
+      "distance": "800m",
+      "location": {
+        "lon": 103.82849,
+        "lat": 1.299
+      }
+    }
+  },
+  "aggs": {
+    "neighbourhood": {
+      "terms": {
+        "field": "geo.neighbourhood.raw",
+        "size": 10
+      }
+    }
+  }
+}
+
+# geo distance query (sorted)
+GET sg_taxi_location/_search
+{
+  "size": 10,
+  "query": {
+    "geo_distance": {
+      "distance": "800m",
+      "location": {
+        "lon": 103.82849,
+        "lat": 1.299
+      }
+    }
+  },
+  "sort": [
+    {
+      "_geo_distance": {
+        "location": {
+          "lon": 103.82849,
+          "lat": 1.299
+        },
+        "order": "asc",
+        "unit": "m",
+        "distance_type": "plane"
+      }
+    }
+  ]
+}
+

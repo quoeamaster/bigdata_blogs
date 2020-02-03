@@ -1,0 +1,157 @@
+# search engine related queries
+
+GET google_book_demo/_search
+{
+  "query": {
+    "match": {
+      "desc": "data driven"
+    }
+  }
+}
+# matching search keywords on multiple fields
+GET google_book_demo/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "DJ Patil",
+      "fields": [
+        "desc",
+        "authors",
+        "publisher"
+      ]
+    }
+  },
+  "highlight": {
+    "fields": {
+      "authors": {},
+      "desc": {}
+      
+    }
+  }
+}
+
+# multiple criteria / condition
+GET google_book_demo/_search
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "range": {
+          "publish_date": {
+            "gte": "2008-01-01"
+          }
+        }
+      },
+      "must": [
+        {
+          "match": {
+            "desc": "data forensics"
+          }
+        },
+        {
+          "match": {
+            "publisher": "pearson o'reilly"
+          }
+        }
+      ]
+    }
+  }
+}
+
+# nice to have conditions (boost / bias)
+GET google_book_demo/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "desc": "database exam"
+          }
+        }
+      ]
+    }
+  }
+}
+GET google_book_demo/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "desc": "database exam"
+          }
+        }
+      ],
+      "should": [
+        {
+          "match": {
+            "publisher": "pearson"
+          }
+        }
+      ]
+    }
+  }
+}
+
+# match like a phrase
+GET google_book_demo/_search
+{
+  "query": {
+    "match": {
+      "desc": "data driven"
+    }
+  },
+  "sort": [
+    {
+      "_score": {
+        "order": "asc"
+      }
+    }
+  ],
+  "highlight": {
+    "fields": {
+      "desc": {}
+    }
+  }
+}
+GET google_book_demo/_search
+{
+  "query": {
+    "match_phrase": {
+      "desc": "data driven"
+    }
+  },
+  "sort": [
+    {
+      "_score": {
+        "order": "asc"
+      }
+    }
+  ],
+  "highlight": {
+    "fields": {
+      "desc": {}
+    }
+  }
+}
+
+# suggestion by prefix
+GET google_book_demo/_search
+{
+  "_source": {
+    "excludes": "desc"
+  }, 
+  "query": {
+    "match_phrase_prefix": {
+      "name": "aw"
+    }
+  },
+  "highlight": {
+    "fields": {
+      "name": {}
+    }
+  }
+}
+
