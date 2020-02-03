@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="65ec0d12-4838-4865-937d-b47805f6f027" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../es_geo_demo_webapp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../es_geo_demo_webapp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../es_geo_demo_webapp/component/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../es_geo_demo_webapp/component/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../es_geo_demo_webapp/component/controls.js" beforeDir="false" afterPath="$PROJECT_DIR$/../es_geo_demo_webapp/component/controls.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../es_geo_demo_webapp/component/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../es_geo_demo_webapp/component/header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../es_geo_demo_webapp/component/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/../es_geo_demo_webapp/component/map.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../es_geo_demo_webapp/css/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/../es_geo_demo_webapp/css/header.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../es_geo_demo_webapp/lib/lib_util.js" beforeDir="false" afterPath="$PROJECT_DIR$/../es_geo_demo_webapp/lib/lib_util.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="65ec0d12-4838-4865-937d-b47805f6f027" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -161,12 +152,12 @@
       <workItem from="1580094719227" duration="25108000" />
       <workItem from="1580177985754" duration="18151000" />
       <workItem from="1580608685451" duration="832000" />
-      <workItem from="1580610223257" duration="2368000" />
+      <workItem from="1580610223257" duration="2489000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46459000" />
+    <option name="totallyTimeSpent" value="46580000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
