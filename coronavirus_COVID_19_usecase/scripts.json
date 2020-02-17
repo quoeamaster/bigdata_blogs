@@ -1,0 +1,171 @@
+
+# coronavirus
+GET coronovirus/_search
+{
+  "query": {
+    "match": {
+      "message": "US"
+    }
+  }
+}
+GET coronovirus/_search
+{
+  "query": {
+    "bool": {
+      "must_not": [
+        {
+          "match": {
+            "message": "US"
+          }
+        }
+      ]
+    }
+  }
+}
+#"""36.6248089,-121.1177379,"San Benito, CA",US,2,0"""
+#"13.7542529,100.493087,Bangkok,Thailand,10,0"
+
+PUT _ingest/pipeline/coronovirus_parser
+{
+  "processors": [
+    {
+      "remove": {
+        "field": ["log", "input", "ecs", "host", "agent"],
+        "if": "ctx.log != null && ctx.input != null && ctx.ecs != null && ctx.host != null && ctx.agent != null"
+      }
+    },
+    {
+      "gsub": {
+        "field": "message",
+        "pattern": "\"",
+        "replacement": "'"
+      }
+    },
+    {
+      "grok": {
+        "field": "message",
+        "patterns": ["%{NUMBER:lat:float},%{NUMBER:lon:float},'%{DATA:city}',%{DATA:country},%{NUMBER:infected:int},%{NUMBER:death:int}", "%{NUMBER:lat:float},%{NUMBER:lon:float},%{DATA:city},%{DATA:country},%{NUMBER:infected:int},%{NUMBER:death:int}"]
+      }
+    }
+  ]
+}
+POST _ingest/pipeline/coronovirus_parser/_simulate
+{
+  "docs": [
+    {
+      "_source": {
+        "message": """36.6248089,-121.1177379,"San Benito, CA",US,2,0"""
+      }
+    },
+    {
+      "_source": {
+        "message": "13.7542529,100.493087,Bangkok,Thailand,10,0"
+      }
+    }
+  ]
+}
+
+# execute the parser
+POST coronovirus/_update_by_query?pipeline=coronovirus_parser
+
+# investigate for the exception
+GET coronovirus/_doc/86L5UHABRsd5XQzeAMTv
+
+# update the parser pipeline
+PUT _ingest/pipeline/coronovirus_parser
+{
+  "version": 2, 
+  "processors": [
+    {
+      "gsub": {
+        "field": "message",
+        "pattern": "\"",
+        "replacement": "'"
+      }
+    },
+    {
+      "grok": {
+        "if": "ctx.message != null", 
+        "field": "message",
+        "patterns": ["%{NUMBER:lat:float},%{NUMBER:lon:float},'%{DATA:city}',%{DATA:country},%{NUMBER:infected:float},%{NUMBER:death:float}", "%{NUMBER:lat:float},%{NUMBER:lon:float},%{DATA:city},%{DATA:country},%{NUMBER:infected:float},%{NUMBER:death:float}"]
+      }
+    },
+    {
+      "script": {
+        "source": """ 
+ctx.infected = (int)Math.floor(ctx.infected);
+ctx.death = (int)Math.floor(ctx.death);
+        """
+      }
+    },
+    {
+      "remove": {
+        "field": ["log", "input", "ecs", "host", "agent", "message"],
+        "if": "ctx.log != null && ctx.input != null && ctx.ecs != null && ctx.host != null && ctx.agent != null && ctx.message != null"
+      }
+    }
+  ]
+}
+POST coronovirus/_update_by_query?pipeline=coronovirus_parser
+GET coronovirus/_doc/86L5UHABRsd5XQzeAMTv
+
+# add back a geo_point field
+PUT coronovirus/_mapping
+{
+  "properties": {
+    "location": {
+      "type": "geo_point"
+    }
+  }
+}
+# parser updating location geo_point
+PUT _ingest/pipeline/coronovirus_parser
+{
+  "version": 3, 
+  "processors": [
+    {
+      "gsub": {
+        "if": "ctx.message != null", 
+        "field": "message",
+        "pattern": "\"",
+        "replacement": "'"
+      }
+    },
+    {
+      "grok": {
+        "if": "ctx.message != null", 
+        "field": "message",
+        "patterns": ["%{NUMBER:lat:float},%{NUMBER:lon:float},'%{DATA:city}',%{DATA:country},%{NUMBER:infected:float},%{NUMBER:death:float}", "%{NUMBER:lat:float},%{NUMBER:lon:float},%{DATA:city},%{DATA:country},%{NUMBER:infected:float},%{NUMBER:death:float}"]
+      }
+    },
+    {
+      "script": {
+        "source": """ 
+ctx.infected = (int)Math.floor(ctx.infected);
+ctx.death = (int)Math.floor(ctx.death);
+        """
+      }
+    },
+    {
+      "set": {
+        "field": "location.lat",
+        "value": "{{lat}}"
+      }
+    },
+    {
+      "set": {
+        "field": "location.lon",
+        "value": "{{lon}}"
+      }
+    },
+    {
+      "remove": {
+        "field": ["log", "input", "ecs", "host", "agent", "message"],
+        "if": "ctx.log != null && ctx.input != null && ctx.ecs != null && ctx.host != null && ctx.agent != null && ctx.message != null"
+      }
+    }
+  ]
+}
+# update again
+POST coronovirus/_update_by_query?pipeline=coronovirus_parser
+
