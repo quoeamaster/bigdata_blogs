@@ -1,0 +1,212 @@
+
+# test on data patching with dynamic properties
+PUT blog_namecard_dynamic_true
+{
+  "mappings": {
+    "properties": {
+      "user_id": { "type": "keyword" },
+      "desc": {"type": "text"}
+    }
+  }
+}
+PUT blog_namecard_dynamic_false
+{
+  "mappings": {
+    "dynamic": "false",
+    "properties": {
+      "user_id": { "type": "keyword" },
+      "desc": {"type": "text"}
+    }
+  }
+}
+PUT blog_namecard_dynamic_strict
+{
+  "mappings": {
+    "dynamic": "strict",
+    "properties": {
+      "user_id": { "type": "keyword" },
+      "desc": {"type": "text"}
+    }
+  }
+}
+
+# bulk to dynamic: true
+POST blog_namecard_dynamic_true/_bulk
+{"index":{"_id":"10001"}}
+{"user_id":"jason barricks","desc":"welcome to the world of AI"}
+{"index":{"_id":"10002"}}
+{"user_id":"Norton Hortons","desc":"rushing beat ran!", "api_version": "2.0"}
+
+GET blog_namecard_dynamic_true/_mapping
+
+# bulk to dynamic: strict
+POST blog_namecard_dynamic_strict/_bulk
+{"index":{"_id":"10001"}}
+{"user_id":"jason barricks","desc":"welcome to the world of AI"}
+{"index":{"_id":"10002"}}
+{"user_id":"Norton Hortons","desc":"rushing beat ran!", "api_version": "2.0"}
+
+GET blog_namecard_dynamic_strict/_mapping
+
+# bulk to dynamic: false
+POST blog_namecard_dynamic_false/_bulk
+{"index":{"_id":"10001"}}
+{"user_id":"jason barricks","desc":"welcome to the world of AI"}
+{"index":{"_id":"10002"}}
+{"user_id":"Norton Hortons","desc":"rushing beat ran!", "api_version": "2.0"}
+
+GET blog_namecard_dynamic_false/_mapping
+# search on the api_version field
+GET blog_namecard_dynamic_false/_search
+{
+  "query": {
+    "match": {
+      "api_version": "2.0"
+    }
+  }
+}
+# search on the desc (known) field
+GET blog_namecard_dynamic_false/_search
+{
+  "query": {
+    "match": {
+      "desc": "rushing"
+    }
+  }
+}
+
+
+# patch by ingest pipeline
+PUT _ingest/pipeline/blog_namecard_patch
+{
+  "processors": [
+    {
+      "set": {
+        "if": "ctx.api_version != null",
+        "field": "api_version",
+        "value": "{{api_version}}"
+      }
+    },
+    {
+      "set": {
+        "if": "ctx.api_version == null",
+        "field": "api_version",
+        "value": "unknown"
+      }
+    }
+  ]
+}
+# re-populate the missing fields
+POST blog_namecard_dynamic_false/_update_by_query?pipeline=blog_namecard_patch
+GET blog_namecard_dynamic_false/_search
+{
+  "query": {
+    "match": {
+      "api_version": "2.0"
+    }
+  }
+}
+GET blog_namecard_dynamic_false/_mapping
+
+# update the mapping (adding back the field that you want)
+PUT blog_namecard_dynamic_false/_mapping
+{
+  "properties": {
+    "api_version": {
+      "type": "keyword"
+    }
+  }
+}
+# re-populate the missing fields
+POST blog_namecard_dynamic_false/_update_by_query?pipeline=blog_namecard_patch
+
+# search and voila
+GET blog_namecard_dynamic_false/_search
+{
+  "query": {
+    "match": {
+      "api_version": "2.0"
+    }
+  }
+}
+
+# add a few more documents
+POST blog_namecard_dynamic_false/_bulk
+{"index":{"_id":"10003"}}
+{"user_id":"Johnnie Harvard","desc":"limitless hours of study","api_version":"2.0"}
+{"index":{"_id":"10004"}}
+{"user_id":"Axwell","desc":"happy coding, folks~","api_version":"2.1"}
+{"index":{"_id":"10005"}}
+{"user_id":"JJ Tommy","desc":"batman is the BEST"}
+
+GET blog_namecard_dynamic_false/_search?filter_path=aggregations._by_api.buckets.key,aggregations._by_api.buckets.doc_count,aggregations._by_api.buckets._top_user_id.hits.hits._source.user_id
+{
+  "size": 0,
+  "aggs": {
+    "_by_api": {
+      "terms": {
+        "field": "api_version",
+        "size": 10
+      },
+      "aggs": {
+        "_top_user_id": {
+          "top_hits": {
+            "size": 5,
+            "_source": "user_id"
+          }
+        }
+      }
+    }
+  }
+}
+
+# -------------------------
+
+# re-design on the strict index
+PUT blog_namecard_dynamic_strict/_mapping
+{
+  "properties": {
+    "api": {
+      "dynamic": "false",
+      "properties": {
+        "version": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
+GET blog_namecard_dynamic_strict/_mapping
+
+# bulk ingest a few
+POST blog_namecard_dynamic_strict/_bulk
+{"index":{"_id":"20000"}}
+{"user_id":"fail for sure","desc":"time for some monster hunting~","food": "orange"}
+{"index":{"_id":"20001"}}
+{"user_id":"Alice Ren","desc":"reading is my best Hobby","api":{"version":"1.0"}}
+{"index":{"_id":"20002"}}
+{"user_id":"Benny Ron","desc":"Shopping is my gf's hobby but not MINE obviously","api":{"version":"1.0","provider":"fakesocialmedia.com"}}
+{"index":{"_id":"20003"}}
+{"user_id":"Benny Ron","desc":"Shopping is my gf's hobby but not MINE obviously","api":{"version":"1.0","provider":"fakeShoppingStats","report_file":"https://fakeShoppingStats/report/2019"}}
+{"index":{"_id":"20004"}}
+{"user_id":"Camila Belmont","desc":"time for some monster hunting~","api":{"version":"1.1","provider":"fakeGameReview.com","game_title":"cVania 3"}}
+
+# possible
+GET blog_namecard_dynamic_strict/_search
+{
+  "query": {
+    "match": {
+      "api.version": "1.0"
+    }
+  }
+}
+# not possible as it is false dynamic behaviour; non declared fields are ignored
+GET blog_namecard_dynamic_strict/_search
+{
+  "query": {
+    "match": {
+      "api.provider": "fakesocialmedia.com"
+    }
+  }
+}
+
