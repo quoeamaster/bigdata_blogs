@@ -1,0 +1,14 @@
+filebeat.inputs:
+- type: log
+  paths:
+    - ../dataset/virus_2020-02-17.csv
+  exclude_lines: ['^Lat']
+
+output.elasticsearch:
+  hosts: ["http://localhost:9200"]
+  index: coronovirus
+
+setup.ilm.enabled: false
+setup.template.name: coronovirus
+setup.template.pattern: coronovirus
+
