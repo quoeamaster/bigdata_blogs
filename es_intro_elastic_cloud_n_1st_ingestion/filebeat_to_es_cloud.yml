@@ -1,0 +1,15 @@
+filebeat.inputs:
+- type: log
+  paths:
+    - {{path to the data file}}
+  json.keys_under_root: true
+
+setup.ilm.enabled: false
+setup.template.name: "imdb_movie"
+setup.template.pattern: "imdb_movie"
+
+output.elasticsearch:
+  index: "imdb_movie"
+
+cloud.id: "{{cloud-id}}"
+cloud.auth: "elastic:{{password}}"
