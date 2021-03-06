@@ -1,0 +1,31 @@
+metricbeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+processors:
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+
+output.elasticsearch:
+  hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
+  username: '${ELASTICSEARCH_USERNAME:}'
+  password: '${ELASTICSEARCH_PASSWORD:}'
+
+# enabled modules for monitoring (e.g. elasticsearch-xpack)
+metricbeat.modules:
+- module: elasticsearch
+  xpack.enabled: true
+  period: 10s
+  hosts: ["http://node01:9200"]
+  #username: "user"
+  #password: "secret"
+  
+  #hosts: ['${ELASTICSEARCH_HOSTS:elasticsearch:9200}']
+
+  #username: "elastic"
+  #password: "changeme"
+  #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
+
+  #index_recovery.active_only: true
+  #scope: node
+
